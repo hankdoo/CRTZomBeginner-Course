@@ -1,6 +1,6 @@
 pragma solidity >=0.5.0 <0.6.0;
 
-import "./zombiefeeding.sol";
+import "./ZombieFeeding.sol";
 
 contract ZombieHelper is ZombieFeeding {
 
@@ -11,8 +11,12 @@ contract ZombieHelper is ZombieFeeding {
     _;
   }
 
-  function withdraw() external onlyOwner {
-    address _owner = owner();
+  function convertToPayable(address _address) public pure returns (address payable) {
+        return address(uint160(_address));
+    }
+
+  function withdraw() external onlyOwner  {
+    address payable _owner = convertToPayable(owner());
     _owner.transfer(address(this).balance);
   }
 
